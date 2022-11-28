@@ -13,6 +13,24 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  	$(document).ready(function() {
+  		/* button이 클릭되었을때 이벤트 */
+		$("button").on("click", function(e) { 
+			var formData = $("#frm");
+			var btn = $(this).data("btn"); //data-btn의 값 가져오기 
+			if(btn == 'reply') {
+				formData.attr("action", "${cpath}/board/reply");
+			}else if(btn == 'modify') {
+				formData.attr("action", "${cpath}/board/modify");
+			}else if(btn == 'list') {
+				formData.find("#idx").remove(); //list.jsp로 넘어갈 경우 idx를 가져갈 필요가 없기 때문
+				formData.attr("action", "${cpath}/board/list");
+			}
+			formData.submit(); //formData 전달 시 idx값(${vo.idx})를 가져옴.
+		});
+	});
+  </script>
 </head>
 <body>
  
@@ -28,11 +46,11 @@
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td><input type="text" class="form-control" name="title" readonly="readonly" value="${vo.title}"/></td>
+				<td><input type="text" class="form-control" name="title" readonly="readonly" value="<c:out value='${vo.title}'/>"/></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea rows="10" class="form-control" readonly="readonly">${vo.content}</textarea></td>
+				<td><textarea rows="10" class="form-control" readonly="readonly"><c:out value='${vo.content}'/></textarea></td>
 			</tr>
 			<tr>
 				<td>작성자</td>
@@ -41,17 +59,20 @@
 			<tr>
 				<td colspan="2" style="text-align: center;">
 					<c:if test="${!empty mvo}">
-						<button class="btn btn-primary" onclick="location.href='${cpath}/board/reply?idx=${vo.idx}'">답글</button>
-						<button class="btn btn-success" onclick="location.href='${cpath}/board/modify?idx=${vo.idx}'">수정</button>
+						<button data-btn="reply" class="btn btn-primary">답글</button>
+						<button data-btn="modify" class="btn btn-success">수정</button>
 					</c:if>
 					<c:if test="${empty mvo}">
 						<button disabled="disabled" class="btn btn-primary">답글</button>
 						<button disabled="disabled" class="btn btn-success" onclick="location.href='${cpath}/board/modify?idx=${vo.idx}'">수정</button>
 					</c:if>
-					<button class="btn btn-info" onclick="location.href='${cpath}/board/list'">목록</button>
+					<button data-btn="list" class="btn btn-info">목록</button>
 				</td>
 			</tr>
 		</table>
+		<form id="frm" action="" method="get"> <!-- reply, modify는 idx를 가져가야하므로 이를 위한 설정 -->
+			<input type="hidden" id="idx" name="idx" value="<c:out value='${vo.idx}'/>"/>
+		</form>
 	</div> 
     <div class="panel-footer">스프2탄(답변형 게시판 만들기)</div>
   </div>

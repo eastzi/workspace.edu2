@@ -93,7 +93,7 @@
 					</c:if>
 					<c:if test="${vo.boardLevel > 0}"> <!-- 0보다 큰 경우 [RE] 붙이기 --> 
 						<c:if test="${vo.boardAvailable == 1}"> <!-- 삭제가 안된 경우 -->
-							<a href="${cpath}/board/get?idx=${vo.idx}">[RE]${vo.title}</a>
+							<a href="${cpath}/board/get?idx=${vo.idx}"><c:out value='[RE]${vo.title}'/></a>
 						</c:if>
 						<c:if test="${vo.boardAvailable == 0}"> <!-- 삭제된 경우 -->
 							<a href="javascript:goMsg()">[RE]삭제된 게시물입니다.</a>				
@@ -101,7 +101,7 @@
 					</c:if>
 					<c:if test="${vo.boardLevel == 0}"> <!-- 0인 경우 [RE]없는 부모글 -->
 						<c:if test="${vo.boardAvailable == 1}"> <!-- 삭제가 안된 경우 -->
-							<a href="${cpath}/board/get?idx=${vo.idx}">${vo.title}</a>				
+							<a href="${cpath}/board/get?idx=${vo.idx}"><c:out value='${vo.title}'/></a>				
 						</c:if>
 						<c:if test="${vo.boardAvailable == 0}"> <!-- 삭제된 경우 -->
 							<a href="javascript:goMsg()">삭제된 게시물입니다.</a>				

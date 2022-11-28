@@ -26,7 +26,7 @@
 			<input type="hidden" name="memID" value="${mvo.memID}">
 			<div class="form-group">
 				<label>제목</label>
-				<input type="text" name="title" class="form-control" value="${vo.title}"/>
+				<input type="text" name="title" class="form-control" value="<c:out value='${vo.title}'/>"/>
 			</div>
 			<div class="form-group">
 				<label>답변</label>
