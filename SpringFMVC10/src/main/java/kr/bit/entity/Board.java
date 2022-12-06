@@ -19,8 +19,6 @@ public class Board { // VO <----- ORM -----> Table
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //자동증가
 	private Long idx; //자동증가대상
 	private String title;
-	
-	@Column(length = 2000)
 	private String content;
 	
 	@Column(updatable = false)
@@ -30,5 +28,5 @@ public class Board { // VO <----- ORM -----> Table
 	private Date indate; //now()
 	@Column(insertable = false, updatable = false, columnDefinition = "int default 0")
 	private Long count;
-
+	
 }

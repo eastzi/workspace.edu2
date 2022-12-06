@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.bit.entity.Board;
 import kr.bit.service.BoardService;
@@ -21,13 +22,13 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String list(Model model) {
 		List<Board> list = boardService.getList();
-		model.addAttribute("list", list);
-		return "list"; //list.jsp
+		model.addAttribute("list", list); // ${list}
+		return "list"; // /WEB-INF/board/list.jsp
 	}
 	
 	@GetMapping("/register")
 	public String register() {
-		return "register"; //register.jsp
+		return "register"; // /WEB-INF/board/register.jsp
 	}
 	
 	@PostMapping("/register")
@@ -35,4 +36,23 @@ public class BoardController {
 		boardService.register(vo);
 		return "redirect:/list";
 	}
+	
+	@GetMapping("/get")
+	public @ResponseBody Board get(Long idx) {
+		Board vo =  boardService.get(idx);
+		return vo;
+	}
+	
+	@GetMapping("/remove")
+	public String remove(Long idx) {
+		boardService.delete(idx); //삭제 성공 후 list페이지로 리턴
+		return "redirect:/list";
+	}
+	
+	@PostMapping("/modify")
+	public String modify(Board vo) {
+		boardService.update(vo);		
+		return "redirect:/list";
+	}
+
 }
